@@ -12,26 +12,27 @@ if (!userId) {
   localStorage.setItem('clicatools_id', userId);
 }
 
+/* -------------------- Elementos del DOM -------------------- */
 const chatBox  = document.getElementById('chat-box');
 const form     = document.getElementById('chat-form');
 const msgInput = document.getElementById('msg');
 
-/* Crea burbuja */
+/* -------------------- Función para añadir burbujas -------------------- */
 const addMsg = (text, cls) => {
   const el = document.createElement('div');
   el.className = `message ${cls}`;
   el.textContent = text;
   chatBox.appendChild(el);
-  chatBox.scrollTop = chatBox.scrollHeight;
+  chatBox.scrollTop = chatBox.scrollHeight; // autoscroll al final
 };
 
-/* Enviar mensaje */
+/* -------------------- Enviar mensaje -------------------- */
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const text = msgInput.value.trim();
   if (!text) return;
 
-  addMsg(text, 'user');
+  addMsg(text, 'user');    // burbuja del usuario
   msgInput.value = '';
 
   try {
@@ -42,12 +43,13 @@ form.addEventListener('submit', async (e) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           source: 'clicatools',
+          user_id: userId,
           message: text
         })
       }
     );
 
-    const data = await res.json();           // Make debe responder { reply:"..." }
+    const data = await res.json();           // Make devuelve { reply: "..." }
     addMsg(data.reply || 'Sin respuesta', 'bot');
   } catch (err) {
     console.error(err);
