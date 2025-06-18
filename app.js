@@ -1,3 +1,17 @@
+/* -------------------- Identificador único del visitante -------------------- */
+let userId = localStorage.getItem('clicatools_id');
+
+if (!userId) {
+  // Navegadores modernos: crypto.randomUUID()
+  if (window.crypto && crypto.randomUUID) {
+    userId = crypto.randomUUID();
+  } else {
+    // Fallback: timestamp + número aleatorio
+    userId = Date.now().toString(36) + Math.random().toString(36).substring(2);
+  }
+  localStorage.setItem('clicatools_id', userId);
+}
+
 const chatBox  = document.getElementById('chat-box');
 const form     = document.getElementById('chat-form');
 const msgInput = document.getElementById('msg');
