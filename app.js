@@ -22,6 +22,13 @@ const addMsg = (text, cls) => {
   const el = document.createElement('div');
   el.className = `message ${cls}`;
   el.innerHTML = text;            // ← ahora interpreta HTML
+
+  /* 👇 NUEVO: forzar target="_blank" en cada enlace que llegue */
+  el.querySelectorAll('a').forEach(a => {
+    a.setAttribute('target', '_blank');
+    a.setAttribute('rel',   'noopener noreferrer');
+  });
+  
   chatBox.appendChild(el);
   chatBox.scrollTop = chatBox.scrollHeight;
 };
