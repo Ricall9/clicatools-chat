@@ -21,7 +21,7 @@ const msgInput = document.getElementById('msg');
 const addMsg = (text, cls) => {
   const el = document.createElement('div');
   el.className = `message ${cls}`;
-  el.innerHTML = text;  // <--- CAMBIO: antes era .textContent
+  el.innerHTML = text;            // ← ahora interpreta HTML
   chatBox.appendChild(el);
   chatBox.scrollTop = chatBox.scrollHeight;
 };
