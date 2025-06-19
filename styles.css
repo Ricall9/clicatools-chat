@@ -67,3 +67,15 @@ button{
   cursor:pointer;
 }
 button:hover{background:#0059c1;}
+
+/* Enlaces dentro de las burbujas */
+.message a{
+  color:#0072bc;        /* azul corporativo */
+  text-decoration:none; /* sin subrayado */
+}
+
+/* Opcional: subrayado al pasar el ratón */
+.message a:hover{
+  color:#0072bc;        /* tono un poco más oscuro */
+  text-decoration:underline;
+}
