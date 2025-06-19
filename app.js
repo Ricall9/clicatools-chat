@@ -21,9 +21,9 @@ const msgInput = document.getElementById('msg');
 const addMsg = (text, cls) => {
   const el = document.createElement('div');
   el.className = `message ${cls}`;
-  el.textContent = text;
+  el.innerHTML = text;  // <--- CAMBIO: antes era .textContent
   chatBox.appendChild(el);
-  chatBox.scrollTop = chatBox.scrollHeight; // autoscroll al final
+  chatBox.scrollTop = chatBox.scrollHeight;
 };
 
 /* -------------------- Enviar mensaje -------------------- */
