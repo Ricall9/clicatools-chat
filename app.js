@@ -2,15 +2,11 @@
 let userId = localStorage.getItem('clicatools_id');
 
 if (!userId) {
-  // Navegadores modernos: crypto.randomUUID()
-  if (window.crypto && crypto.randomUUID) {
-    userId = crypto.randomUUID();
-  } else {
-    // Fallback: timestamp + número aleatorio
-    userId = Date.now().toString(36) + Math.random().toString(36).substring(2);
-  }
+  // Genera un número aleatorio de 10 dígitos (entre 1000000000 y 9999999999)
+  userId = Math.floor(1e9 + Math.random() * 9e9).toString();
   localStorage.setItem('clicatools_id', userId);
 }
+
 
 /* -------------------- Elementos del DOM -------------------- */
 const chatBox  = document.getElementById('chat-box');
