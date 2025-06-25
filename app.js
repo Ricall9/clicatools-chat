@@ -61,7 +61,8 @@ form.addEventListener('submit', async (e) => {
       const reply = match[1].replace(/\\"/g, '"');
       addMsg(reply, 'bot');
     } else {
-      addMsg('⚠️ No se pudo interpretar la respuesta del servidor.', 'bot');
+      addMsg('⚠️ Lo siento, no tengo permiso para responder eso. 
+      ¿Quieres intentar con otra consulta?', 'bot');
       console.warn('Respuesta cruda:', textResponse);
     }
 
