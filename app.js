@@ -38,7 +38,7 @@ form.addEventListener('submit', async (e) => {
   addMsg(text, 'user');    // burbuja del usuario
   msgInput.value = '';
 
-    try {
+  try {
     const res = await fetch(
       'https://hook.us2.make.com/wnnftj140mu7yd4mvconfbl1jh1snan3',
       {
@@ -52,23 +52,10 @@ form.addEventListener('submit', async (e) => {
       }
     );
 
-    // Verifica si la respuesta fue exitosa (código HTTP 200–299)
-    if (!res.ok) {
-      throw new Error(`HTTP error: ${res.status}`);
-    }
-
-    const data = await res.json();
-
-    if (data && typeof data.reply === 'string' && data.reply.trim()) {
-      addMsg(data.reply, 'bot');
-    } else {
-      addMsg('⚠️ El servidor respondió, pero sin mensaje válido.', 'bot');
-      console.warn('Respuesta inesperada:', data);
-    }
-
+    const data = await res.json();           // Make devuelve { reply: "..." }
+    addMsg(data.reply || 'Sin respuesta', 'bot');
   } catch (err) {
-    console.error('Error al procesar la respuesta:', err);
-    addMsg('Error de conexión 🛑 (ver consola)', 'bot');
+    console.error(err);
+    addMsg('Error de conexión 🛑', 'bot');
   }
-
 });
