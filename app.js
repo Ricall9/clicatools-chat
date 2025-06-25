@@ -52,10 +52,22 @@ form.addEventListener('submit', async (e) => {
       }
     );
 
-    const data = await res.json();           // Make devuelve { reply: "..." }
-    addMsg(data.reply || 'Sin respuesta', 'bot');
+    const textResponse = await res.text();
+
+    // Extrae el campo "reply" usando una expresión regular segura
+    const match = textResponse.match(/"reply"\s*:\s*"([\s\S]*?)"\s*}/);
+    if (match && match[1]) {
+      // Decodifica comillas escapadas si las hay
+      const reply = match[1].replace(/\\"/g, '"');
+      addMsg(reply, 'bot');
+    } else {
+      addMsg('⚠️ No se pudo interpretar la respuesta del servidor.', 'bot');
+      console.warn('Respuesta cruda:', textResponse);
+    }
+
   } catch (err) {
-    console.error(err);
+    console.error('Error al conectar con el servidor:', err);
     addMsg('Error de conexión 🛑', 'bot');
   }
 });
+
