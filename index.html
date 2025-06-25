@@ -13,11 +13,17 @@
 
   <main id="chat-box"></main>
 
-  <form id="chat-form">
-    <input id="msg" type="text" placeholder="Escribe tu mensaje..." autocomplete="off" required />
-    <input id="file" type="file" />
-    <button type="submit">Enviar</button>
-  </form>
+<form id="chat-form">
+  <label for="file" class="icon-btn">📎</label>
+  <input id="file" type="file" style="display: none;" />
+
+  <input id="msg" type="text" placeholder="Escribe un mensaje..." autocomplete="off" required />
+
+  <button type="button" id="emoji-btn" class="icon-btn">😊</button>
+  <button type="button" id="mic-btn" class="icon-btn">🎤</button>
+  <button type="submit">Enviar</button>
+</form>
+
 
   <script src="app.js"></script>
 </body>
