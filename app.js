@@ -52,10 +52,25 @@ form.addEventListener('submit', async (e) => {
       }
     );
 
-    const data = await res.json();           // Make devuelve { reply: "..." }
-    addMsg(data.reply || 'Sin respuesta', 'bot');
+    const rawText = await res.text();
+
+    try {
+      const parsed = JSON.parse(rawText);
+
+      if (parsed && typeof parsed.reply === 'string' && parsed.reply.trim()) {
+        addMsg(parsed.reply, 'bot');
+      } else {
+        console.warn('Respuesta sin campo válido:', parsed);
+        addMsg('⚠️ El servidor respondió, pero no se encontró el mensaje.', 'bot');
+      }
+    } catch (parseErr) {
+      console.error('No se pudo interpretar como JSON:', rawText);
+      addMsg('⚠️ La respuesta del servidor no fue válida.', 'bot');
+    }
+
   } catch (err) {
-    console.error(err);
+    console.error('Error al conectar con el servidor:', err);
     addMsg('Error de conexión 🛑', 'bot');
   }
 });
+
