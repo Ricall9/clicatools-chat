@@ -21,13 +21,10 @@ const addMsg = (text, cls) => {
 
   /* 👇 NUEVO: forzar target="_blank" en cada enlace que llegue */
   el.querySelectorAll('a').forEach(a => {
-  const isMailto = a.href.startsWith("mailto:");
-  if (!isMailto) {
     a.setAttribute('target', '_blank');
-    a.setAttribute('rel', 'noopener noreferrer');
-  }
-});
-
+    a.setAttribute('rel',   'noopener noreferrer');
+  });
+  
   chatBox.appendChild(el);
   chatBox.scrollTop = chatBox.scrollHeight;
 };
@@ -73,4 +70,3 @@ form.addEventListener('submit', async (e) => {
     addMsg('Error de conexión 🛑', 'bot');
   }
 });
-
