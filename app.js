@@ -28,7 +28,6 @@ const addMsg = (text, cls) => {
   }
 });
 
-  
   chatBox.appendChild(el);
   chatBox.scrollTop = chatBox.scrollHeight;
 };
