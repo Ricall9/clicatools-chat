@@ -21,9 +21,20 @@ const addMsg = (text, cls) => {
 
   /* 👇 NUEVO: forzar target="_blank" en cada enlace que llegue */
   el.querySelectorAll('a').forEach(a => {
+  const href = a.getAttribute('href');
+  
+  if (href && href.startsWith('mailto:')) {
+    // Reemplazamos mailto por Gmail web
+    const email = href.replace('mailto:', '');
+    a.setAttribute('href', `https://mail.google.com/mail/?view=cm&fs=1&to=${email}`);
     a.setAttribute('target', '_blank');
-    a.setAttribute('rel',   'noopener noreferrer');
-  });
+    a.setAttribute('rel', 'noopener noreferrer');
+  } else {
+    a.setAttribute('target', '_blank');
+    a.setAttribute('rel', 'noopener noreferrer');
+  }
+});
+
   
   chatBox.appendChild(el);
   chatBox.scrollTop = chatBox.scrollHeight;
