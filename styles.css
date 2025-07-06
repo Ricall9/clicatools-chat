@@ -1,126 +1,40 @@
-/* Reset básico */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-body {
-  font-family: 'Segoe UI', 'Roboto', sans-serif;
-  background: #ffffff;
-  color: #111;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-}
-
-/* Encabezado tipo app */
-header {
-  background: #fff;
-  padding: 16px;
-  text-align: left;
-  font-size: 1.3rem;
-  font-weight: bold;
-  border-bottom: 1px solid #eee;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-}
-
-/* Contenedor del chat */
-#chat-box {
-  flex-grow: 1;
-  padding: 16px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-/* Burbujas */
-.message {
-  padding: 10px 14px;
-  border-radius: 14px;
-  font-size: 1rem;
-  max-width: 80%;
-  line-height: 1.5;
-  word-wrap: break-word;
-  white-space: pre-wrap;
-}
-.user {
-  background: #e8f0fe;
-  color: #000;
-  align-self: flex-end;
-  border-bottom-right-radius: 4px;
-}
-.bot {
-  background: #f1f3f4;
-  color: #333;
-  align-self: flex-start;
-  border-bottom-left-radius: 4px;
-}
-
-/* Formulario estilo burbuja flotante */
+/* Formulario fijo al fondo */
 #chat-form {
-  padding: 8px 12px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 640px;
+  margin: auto;
+  padding: 10px 16px;
+  background: #ffffff;
+  border-top: 1px solid #e0e0e0;
   display: flex;
-  align-items: center;
   gap: 8px;
-  background: #fff;
-  border-top: 1px solid #eee;
+  z-index: 10;
 }
+
 #msg {
   flex: 1;
-  border: none;
-  background: #f1f3f4;
+  padding: 10px 14px;
+  border: 1px solid #ccc;
   border-radius: 20px;
-  padding: 10px 16px;
   font-size: 1rem;
+  background: #f1f3f4;
   outline: none;
 }
+
 button {
-  background: none;
-  border: none;
-  color: #0070f3;
+  padding: 10px 16px;
   font-weight: bold;
-  cursor: pointer;
-  font-size: 1rem;
-  padding: 8px 12px;
-}
-
-/* Enlaces */
-.message a {
-  color: #005ec1;
-  text-decoration: none;
-}
-.message a:hover {
-  text-decoration: underline;
-}
-
-/* Chips / Botones rápidos (como los de la imagen) */
-.suggestion-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 12px 16px;
-  justify-content: center;
-}
-.suggestion-buttons button {
-  padding: 10px 14px;
-  border: 1px solid #ddd;
+  border: none;
   border-radius: 20px;
-  background: #fff;
-  font-size: 0.9rem;
+  background: #0070f3;
+  color: white;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background 0.2s ease;
 }
-.suggestion-buttons button:hover {
-  background: #f1f1f1;
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-  header {
-    font-size: 1.1rem;
-  }
-  .message {
-    font-size: 0.95rem;
-  }
+button:hover {
+  background: #005ec1;
 }
