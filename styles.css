@@ -100,4 +100,11 @@ button:hover{background:#005ec1}
     max-width:var(--chat-max);
     transform:translateX(-50%);
   }
+
+  .logo-center {
+  display: block;
+  margin: 0 auto;
+  max-height: 42px;
+  padding: 6px 0;
+  }
 }
