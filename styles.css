@@ -32,6 +32,7 @@ header{
   padding:10px 14px;border-radius:14px;
   font-size:1rem;max-width:80%;
   line-height:1.5;word-wrap:break-word;white-space:pre-wrap;
+  flex-shrink:0;display:inline-block;
 }
 .user{
   background:#e8f0fe;color:#000;
