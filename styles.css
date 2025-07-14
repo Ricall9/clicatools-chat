@@ -102,19 +102,16 @@ button:hover{background:#005ec1}
 /* -------- BOTÓN FLOTANTE -------- */
 #clear-chat {
   position: fixed;
-  bottom: 80px;
+  bottom: 90px;
   right: 16px;
-  padding: 10px 14px;
-  font-size: 0.9rem;
-  background-color: #f44336;
-  color: #fff;
+  background: none;
   border: none;
-  border-radius: 20px;
+  font-size: 1.8rem;
   cursor: pointer;
+  color: #d32f2f;
   z-index: 20;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  transition: background 0.2s;
+  transition: transform 0.2s;
 }
 #clear-chat:hover {
-  background-color: #d32f2f;
+  transform: scale(1.2);
 }
