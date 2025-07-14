@@ -7,11 +7,27 @@ if (!userId) {
   localStorage.setItem('clicatools_id', userId);
 }
 
-
 /* -------------------- Elementos del DOM -------------------- */
 const chatBox  = document.getElementById('chat-box');
 const form     = document.getElementById('chat-form');
 const msgInput = document.getElementById('msg');
+
+mostrarHistorial();  // ← carga los mensajes anteriores al iniciar
+
+/* -------------------- Guardar y recuperar historial -------------------- */
+function guardarEnHistorial(role, content) {
+  const historial = JSON.parse(localStorage.getItem("chatHistorial") || "[]");
+  historial.push({ role, content });
+  localStorage.setItem("chatHistorial", JSON.stringify(historial));
+}
+
+function mostrarHistorial() {
+  const historial = JSON.parse(localStorage.getItem("chatHistorial") || "[]");
+  historial.forEach(msg => {
+    const cls = msg.role === "user" ? "user" : "bot";
+    addMsg(msg.content, cls);
+  });
+}
 
 /* -------------------- Función para añadir burbujas -------------------- */
 const addMsg = (text, cls) => {
@@ -35,7 +51,8 @@ form.addEventListener('submit', async (e) => {
   const text = msgInput.value.trim();
   if (!text) return;
 
-  addMsg(text, 'user');    // burbuja del usuario
+  addMsg(text, 'user');
+guardarEnHistorial("user", text);
   msgInput.value = '';
 
   try {
@@ -60,6 +77,7 @@ form.addEventListener('submit', async (e) => {
       // Decodifica comillas escapadas si las hay
       const reply = match[1].replace(/\\"/g, '"');
       addMsg(reply, 'bot');
+guardarEnHistorial("bot", reply);
     } else {
       addMsg('⚠️ Lo siento, no tengo permiso para responder eso.', 'bot');
       console.warn('Respuesta cruda:', textResponse);
