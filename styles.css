@@ -104,14 +104,16 @@ button:hover{background:#005ec1}
   position: fixed;
   bottom: 90px;
   right: 16px;
-  background: none;
+  background: transparent;
   border: none;
   font-size: 1.8rem;
   cursor: pointer;
-  color: #d32f2f;
+  color: #888;
   z-index: 20;
-  transition: transform 0.2s;
+  transition: transform 0.2s, color 0.2s;
 }
+
 #clear-chat:hover {
   transform: scale(1.2);
+  color: #d32f2f; /* se vuelve rojo al pasar el mouse */
 }
