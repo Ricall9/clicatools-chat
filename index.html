@@ -8,25 +8,40 @@
 </head>
 <body>
   <header>
-    <h3>Clicatools<h3>
+    <h3>Clicatools</h3>
+    <div class="menu-container">
+      <button id="menu-toggle">☰</button>
+      <ul id="menu-options" class="hidden">
+        <li onclick="localStorage.removeItem('chatHistorial'); location.reload();">🧹 Borrar conversación</li>
+        <!-- Puedes agregar más opciones aquí -->
+      </ul>
+    </div>
   </header>
 
   <main id="chat-box"></main>
 
-<form id="chat-form">
-  <label for="file" class="icon-btn">📎</label>
-  <input id="file" type="file" style="display: none;" />
+  <form id="chat-form">
+    <label for="file" class="icon-btn">📎</label>
+    <input id="file" type="file" style="display: none;" />
 
-  <input id="msg" type="text" placeholder="Escribe un mensaje..." autocomplete="off" required />
+    <input id="msg" type="text" placeholder="Escribe un mensaje..." autocomplete="off" required />
 
-  <button type="submit">Enviar</button>
-</form>
+    <button type="submit">Enviar</button>
+  </form>
 
   <script src="app.js"></script>
-
-      <!-- ✅ Botón para limpiar conversación -->
-<button id="clear-chat" onclick="localStorage.removeItem('chatHistorial'); location.reload();" title="Borrar conversación">
-  🧹
-</button>
+  <script>
+    // Control del menú
+    const toggleBtn = document.getElementById('menu-toggle');
+    const menu = document.getElementById('menu-options');
+    toggleBtn.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+    document.addEventListener('click', (e) => {
+      if (!toggleBtn.contains(e.target) && !menu.contains(e.target)) {
+        menu.classList.add('hidden');
+      }
+    });
+  </script>
 </body>
 </html>
