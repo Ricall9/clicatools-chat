@@ -22,7 +22,7 @@ header{
 .menu-container {
   position: absolute;
   top: 0px;
-  left: 16px;
+  right: 16px;
 }
 
 #menu-toggle {
