@@ -12,8 +12,6 @@ const chatBox  = document.getElementById('chat-box');
 const form     = document.getElementById('chat-form');
 const msgInput = document.getElementById('msg');
 
-mostrarHistorial();  // ← carga los mensajes anteriores al iniciar
-
 /* -------------------- Guardar y recuperar historial -------------------- */
 function guardarEnHistorial(role, content) {
   const historial = JSON.parse(localStorage.getItem("chatHistorial") || "[]");
@@ -33,17 +31,19 @@ function mostrarHistorial() {
 const addMsg = (text, cls) => {
   const el = document.createElement('div');
   el.className = `message ${cls}`;
-  el.innerHTML = text;            // ← ahora interpreta HTML
+  el.innerHTML = text;
 
-  /* 👇 NUEVO: forzar target="_blank" en cada enlace que llegue */
   el.querySelectorAll('a').forEach(a => {
     a.setAttribute('target', '_blank');
     a.setAttribute('rel',   'noopener noreferrer');
   });
-  
+
   chatBox.appendChild(el);
   chatBox.scrollTop = chatBox.scrollHeight;
 };
+
+/* -------------------- Mostrar historial al cargar -------------------- */
+mostrarHistorial();
 
 /* -------------------- Enviar mensaje -------------------- */
 form.addEventListener('submit', async (e) => {
@@ -52,7 +52,7 @@ form.addEventListener('submit', async (e) => {
   if (!text) return;
 
   addMsg(text, 'user');
-guardarEnHistorial("user", text);
+  guardarEnHistorial("user", text);
   msgInput.value = '';
 
   try {
@@ -71,13 +71,11 @@ guardarEnHistorial("user", text);
 
     const textResponse = await res.text();
 
-    // Extrae el campo "reply" usando una expresión regular segura
     const match = textResponse.match(/"reply"\s*:\s*"([\s\S]*?)"\s*}/);
     if (match && match[1]) {
-      // Decodifica comillas escapadas si las hay
       const reply = match[1].replace(/\\"/g, '"');
       addMsg(reply, 'bot');
-guardarEnHistorial("bot", reply);
+      guardarEnHistorial("bot", reply);
     } else {
       addMsg('⚠️ Lo siento, no tengo permiso para responder eso.', 'bot');
       console.warn('Respuesta cruda:', textResponse);
