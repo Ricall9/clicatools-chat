@@ -8,30 +8,43 @@
 </head>
 <body>
   <header>
-    <h3>Clicatools</h3>
+    <!-- Logo o título centrado -->
+    <img src="logo-clicatools.png" alt="Clicatools" class="logo-center" />
+
+    <!-- Menú superior derecho -->
     <div class="menu-container">
       <button id="menu-toggle">☰</button>
       <ul id="menu-options" class="hidden">
         <li onclick="localStorage.removeItem('chatHistorial'); location.reload();">🧹 Borrar conversación</li>
-        <!-- Puedes agregar más opciones aquí -->
       </ul>
     </div>
   </header>
 
+  <!-- Campo para registrar el nombre -->
+  <div id="user-setup" style="padding: 10px; text-align: center;">
+    <input id="username" type="text" placeholder="Escribe tu nombre"
+      style="padding: 8px 12px; border-radius: 20px; border: 1px solid #ccc; width: 60%; max-width: 300px;" />
+    <button onclick="saveUsername()" style="margin-left: 8px; padding: 8px 16px; border-radius: 20px; border: none; background: #0070f3; color: white; cursor: pointer;">Guardar</button>
+  </div>
+
+  <!-- Zona de conversación -->
   <main id="chat-box"></main>
 
+  <!-- Campo de mensajes -->
   <form id="chat-form">
     <label for="file" class="icon-btn">📎</label>
     <input id="file" type="file" style="display: none;" />
 
     <input id="msg" type="text" placeholder="Escribe un mensaje..." autocomplete="off" required />
-
     <button type="submit">Enviar</button>
   </form>
 
+  <!-- Lógica del chat -->
   <script src="app.js"></script>
+
+  <!-- Scripts adicionales -->
   <script>
-    // Control del menú
+    // Menú hamburguesa
     const toggleBtn = document.getElementById('menu-toggle');
     const menu = document.getElementById('menu-options');
     toggleBtn.addEventListener('click', () => {
@@ -42,6 +55,28 @@
         menu.classList.add('hidden');
       }
     });
+
+    // Gestión del nombre del usuario
+    let userName = localStorage.getItem('clicatools_username');
+
+    function saveUsername() {
+      const input = document.getElementById('username');
+      const name = input.value.trim();
+      if (!name) return alert('Por favor escribe tu nombre');
+      localStorage.setItem('clicatools_username', name);
+      userName = name;
+      document.getElementById('user-setup').style.display = 'none';
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (userName) {
+        const setup = document.getElementById('user-setup');
+        if (setup) setup.style.display = 'none';
+      }
+    });
+
+    // Función accesible desde app.js
+    window.getChatUserName = () => userName;
   </script>
 </body>
 </html>
