@@ -2,7 +2,6 @@
 let userId = localStorage.getItem('clicatools_id');
 
 if (!userId) {
-  // Genera un número aleatorio de 10 dígitos
   userId = Math.floor(1e9 + Math.random() * 9e9).toString();
   localStorage.setItem('clicatools_id', userId);
 }
@@ -12,13 +11,12 @@ const chatBox  = document.getElementById('chat-box');
 const form     = document.getElementById('chat-form');
 const msgInput = document.getElementById('msg');
 
-/* -------------------- Función para añadir burbujas -------------------- */
+/* -------------------- Función para añadir burbujas al DOM -------------------- */
 const addMsg = (text, cls) => {
   const el = document.createElement('div');
   el.className = `message ${cls}`;
-  el.innerHTML = text; // permite HTML como <a>
+  el.innerHTML = text;
 
-  // Enlaces externos seguros
   el.querySelectorAll('a').forEach(a => {
     a.setAttribute('target', '_blank');
     a.setAttribute('rel', 'noopener noreferrer');
@@ -28,16 +26,38 @@ const addMsg = (text, cls) => {
   chatBox.scrollTop = chatBox.scrollHeight;
 };
 
+/* -------------------- Función para guardar en localStorage -------------------- */
+const saveToHistory = (role, text) => {
+  const history = JSON.parse(localStorage.getItem('chatHistorial')) || [];
+  history.push({ role, text });
+  localStorage.setItem('chatHistorial', JSON.stringify(history));
+};
+
+/* -------------------- Cargar historial guardado -------------------- */
+window.addEventListener('DOMContentLoaded', () => {
+  const history = JSON.parse(localStorage.getItem('chatHistorial')) || [];
+  history.forEach(entry => {
+    addMsg(entry.text, entry.role);
+  });
+
+  // Ocultar campo de nombre si ya está guardado
+  const userName = localStorage.getItem('clicatools_username');
+  if (userName) {
+    const setup = document.getElementById('user-setup');
+    if (setup) setup.style.display = 'none';
+  }
+});
+
 /* -------------------- Enviar mensaje -------------------- */
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const text = msgInput.value.trim();
   if (!text) return;
 
-  addMsg(text, 'user'); // Mensaje del usuario
+  addMsg(text, 'user');
+  saveToHistory('user', text);
   msgInput.value = '';
 
-  // Obtiene el nombre guardado en localStorage
   const userName = window.getChatUserName?.() || 'Anónimo';
 
   try {
@@ -54,18 +74,20 @@ form.addEventListener('submit', async (e) => {
 
     const textResponse = await res.text();
 
-    // Intenta extraer el campo "reply" si viene como texto plano
     const match = textResponse.match(/"reply"\s*:\s*"([\s\S]*?)"\s*}/);
     if (match && match[1]) {
       const reply = match[1].replace(/\\"/g, '"');
       addMsg(reply, 'bot');
+      saveToHistory('bot', reply);
     } else {
       addMsg('⚠️ Lo siento, no tengo permiso para responder eso.', 'bot');
+      saveToHistory('bot', '⚠️ Lo siento, no tengo permiso para responder eso.');
       console.warn('Respuesta cruda:', textResponse);
     }
 
   } catch (err) {
     console.error('Error al conectar con el servidor:', err);
     addMsg('🛑 Error de conexión', 'bot');
+    saveToHistory('bot', '🛑 Error de conexión');
   }
 });
