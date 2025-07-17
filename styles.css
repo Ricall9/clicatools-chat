@@ -141,4 +141,8 @@ button:hover{background:#005ec1}
     max-width:var(--chat-max);
     transform:translateX(-50%);
   }
+  
+  #menu-options {
+  text-align: left;
+  }
 }
