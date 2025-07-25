@@ -61,7 +61,7 @@ form.addEventListener('submit', async (e) => {
   const userName = window.getChatUserName?.() || 'Anónimo';
 
   try {
-    const res = await fetch('http://147.93.184.206/webhook/chatct', {
+    const res = await fetch('/webhook/chatct', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
